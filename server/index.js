@@ -18,7 +18,7 @@ app.use(express.json());
 
 // Routes
 // ---------------------------------------------------------
-app.use(require('./routes/employee.routes'));
+app.use('/api/employees', require('./routes/employee.routes'));
 
 // Servidor escuchando en el puerto 3000
 app.listen(app.get('port'), () => {
