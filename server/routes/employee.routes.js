@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
+const emploCtrl = require('../controllers/employee.controller')
 
 // Ruta para enviar y recibir informacion
-router.get('/', (red, res) => {
-    res.send({
-        status: 'API Works'
-    });
-})
+router.get('/', emploCtrl.getEmployees);
+router.post('/', emploCtrl.createEmployee);
+router.get('/:id', emploCtrl.getEmployee);
+router.put('/:id', emploCtrl.editEmployee);
+router.delete('/:id', emploCtrl.deleteEmployee);
 
 module.exports = router;
