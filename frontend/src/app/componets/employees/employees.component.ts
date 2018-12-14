@@ -23,11 +23,21 @@ export class EmployeesComponent implements OnInit {
 
   // Agregar empleado
   addEmployee (form: NgForm) {
-    this.employeeService.postEmployee(form.value)
+    if (form.value._id) {
+      this.employeeService.putEmployee(form.value)
+        .subscribe(res => {
+          this.resetForm(form);
+          M.toast({ html: 'Updated successfuly'});
+          this.getEmployees();
+        })
+    } else {
+      this.employeeService.postEmployee(form.value)
       .subscribe(res => {
         this.resetForm(form);
         M.toast({ html: 'Save successfuly'});
+        this.getEmployees();
       })
+    }
   }
 
   // Obtener un arreglo de los datos guardados
@@ -38,6 +48,23 @@ export class EmployeesComponent implements OnInit {
         console.table(res);
         
       })
+  }
+
+  // Editar un registro de empleado
+  editEmployee (employee: Employee) {
+    this.employeeService.slectedEmployee = employee;
+  }
+  
+  // Eliminar registro de un empleado
+  deleteEmployee (_id: string) {
+    if (confirm('Are you sure?')) {
+      this.employeeService.deleteEmployee(_id)
+      .subscribe(res => {
+        console.log(res);
+        this.getEmployees();
+        M.toast({ html: 'Deleted successfuly' });
+      })
+    }
   }
 
   // Reseteo del formulario

@@ -5,6 +5,7 @@
         <div class="card-content">
           <!-- Evento de Angular al enviar los formularios -->
           <form #employeeForm="ngForm" (ngSubmit)="addEmployee(employeeForm)">
+            <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="employeeService.slectedEmployee._id">
             <div class="row">
               <div class="input-field col s12">
                 <input type="text" name="name" #name="ngModel" [(ngModel)]="employeeService.slectedEmployee.name" placeholder="Name">
@@ -27,7 +28,29 @@
       </div>
     </div>
     <div class="col s7">
-
+      <table>
+        <thead>
+          <th>Name</th>
+          <th>Activity</th>
+          <th>Production</th>
+          <th>State</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let employee of employeeService.employees">
+            <td>{{ employee.name }}</td>
+            <td>{{ employee.activity }}</td>
+            <td>{{ employee.production }}</td>
+            <td>
+              <a (click)="editEmployee(employee)">
+                <i class="material-icons ">edit</i>
+              </a>
+              <a (click)="deleteEmployee(employee._id)">
+                <i class="material-icons ">delete</i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

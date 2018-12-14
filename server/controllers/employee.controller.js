@@ -13,7 +13,11 @@ employeeCtrl.getEmployees = async (red, res) => {
 // Agrega un nuevo registro del empleado
 employeeCtrl.createEmployee = async (req, res) => {
     // Guardar los datos
-    const employee = new Employee(req.body);
+    const employee = new Employee({
+        name: req.body.name,
+        activity: req.body.activity,
+        production: req.body.production
+    });
     await employee.save();
     res.json({
         'status': 'Employee saved'
